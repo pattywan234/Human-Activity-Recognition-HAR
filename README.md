@@ -15,5 +15,5 @@ Before you run the code,
 Enjoy!
 
 Reference
-- LSTM - https://medium.com/@curiousily/human-activity-recognition-using-lstms-on-android-tensorflow-for-hackers-part-vi-492da5adef64
+- LSTM - https://github.com/curiousily/TensorFlow-on-Android-for-Human-Activity-Recognition-with-LSTMs
 - CNN  - https://github.com/Shahnawax/HAR-CNN-Keras
