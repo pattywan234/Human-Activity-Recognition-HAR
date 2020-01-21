@@ -13,3 +13,7 @@ Before you run the code,
 2. set Virtualenv that has all inpenndencies.
 
 Enjoy!
+
+Reference
+LSTM - https://medium.com/@curiousily/human-activity-recognition-using-lstms-on-android-tensorflow-for-hackers-part-vi-492da5adef64
+CNN  - https://github.com/Shahnawax/HAR-CNN-Keras
