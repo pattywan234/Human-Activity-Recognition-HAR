@@ -36,7 +36,21 @@ numOfColumns = segments.shape[2]
 
 reshapedSegments = segments.reshape(segments.shape[0], numOfRows, numOfColumns, 1)
 
-np.save('data-cnn.npy', reshapedSegments)
-np.save('label-cnn.npy', labels)
+# splitting in training and testing data
+trainSplit = np.random.rand(len(reshapedSegments)) < trainSplitRatio
+trainX = reshapedSegments[trainSplit]
+testX = reshapedSegments[~trainSplit]
+#replace NaN zero and infinity with  large finite numbers
+trainX = np.nan_to_num(trainX)
+testX = np.nan_to_num(testX)
+trainY = labels[trainSplit]
+testY = labels[~trainSplit]
+
+np.save('data/CNN-data/data-cnn.npy', reshapedSegments)
+np.save('data/CNN-data/label-cnn.npy', labels)
+np.save('data/CNN-data/trainX.npy', trainX)
+np.save('data/CNN-data/testX.npy', testX)
+np.save('data/CNN-data/trainY.npy', trainY)
+np.save('data/CNN-data/testY.npy', testY)
 print("finished")
 
