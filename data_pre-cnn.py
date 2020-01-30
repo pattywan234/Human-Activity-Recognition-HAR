@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
+random_seed = 611
+np.random.seed(random_seed)
 
 def readData(filePath):
     # attributes of the dataset
