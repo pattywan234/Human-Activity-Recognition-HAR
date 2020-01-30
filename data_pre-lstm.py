@@ -24,7 +24,15 @@ for i in range(0, len(df) - N_TIME_STEPS, step):
 reshaped_segments = np.asarray(segments, dtype=np.float32).reshape(-1, N_TIME_STEPS, N_FEATURES)
 labels = np.asarray(pd.get_dummies(labels), dtype=np.float32)
 
-np.save("label.npy", labels)
-np.save("data.npy", reshaped_segments)
+RANDOM_SEED = 42
+#random_state is the seed used by the random number generator, if number is same random result will be same
+X_train, X_test, y_train, y_test = train_test_split(
+        reshaped_segments, labels, test_size=0.2, random_state=RANDOM_SEED)
+
+
+np.save("data/LSTM-data/X_train.npy", X_train)
+np.save("data/LSTM-data/X_test.npy", X_test)
+np.save("data/LSTM-data/y_train.npy", y_train)
+np.save("data/LSTM-data/y_test.npy", y_test)
 print("finished")
 
