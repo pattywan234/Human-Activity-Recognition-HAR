@@ -1,16 +1,13 @@
 import numpy as np
 import tensorflow.compat.v1 as tf
-from sklearn.model_selection import train_test_split
 
 tf.disable_v2_behavior()
 
-RANDOM_SEED = 42
 
-reshaped_segments = np.load("data.npy")
-labels = np.load("label.npy")
-
-X_train, X_test, y_train, y_test = train_test_split(
-        reshaped_segments, labels, test_size=0.2, random_state=RANDOM_SEED)
+X_train = np.load("data/LSTM-data/X_train.npy")
+X_test = np.load("data/LSTM-data/X_test.npy")
+y_train = np.load("data/LSTM-data/y_train.npy")
+y_test = np.load("data/LSTM-data/y_test.npy")
 
 N_CLASSES = 6
 N_HIDDEN_UNITS = 64
