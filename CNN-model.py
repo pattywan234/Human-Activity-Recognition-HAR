@@ -3,11 +3,13 @@ from keras.models import Sequential
 from keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, Dropout
 from keras import optimizers
 
-random_seed = 611
-np.random.seed(random_seed)
 
-reshapedSegments = np.load('data-cnn.npy')
-labels = np.load('label-cnn.npy')
+reshapedSegments = np.load('data/CNN-data/data-cnn.npy')
+labels = np.load('data/CNN-data/label-cnn.npy')
+trainX = np.load('data/CNN-data/trainX.npy')
+testX = np.load('data/CNN-data/testX.npy')
+trainY = np.load('data/CNN-data/trainY.npy')
+testY = np.load('data/CNN-data/testY.npy')
 
 numOfRows = reshapedSegments.shape[1]
 numOfColumns = reshapedSegments.shape[2]
