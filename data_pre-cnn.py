@@ -33,6 +33,8 @@ segments, labels = segment_signal(dataset)
 labels = np.asarray(pd.get_dummies(labels), dtype=np.int8)
 numOfRows = segments.shape[1]
 numOfColumns = segments.shape[2]
+# split ratio for test and validation
+trainSplitRatio = 0.8
 
 reshapedSegments = segments.reshape(segments.shape[0], numOfRows, numOfColumns, 1)
 
