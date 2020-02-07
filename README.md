@@ -1,4 +1,4 @@
-# Human Activity Recognition(HAR)
+# Human Activity Recognition (HAR)
 In this project inpendentcies,
 - python 3.7 (but it's also work, if you use python 3.6)
 - tensroflow (version 2 but in the code already change compatibility to version 1)
