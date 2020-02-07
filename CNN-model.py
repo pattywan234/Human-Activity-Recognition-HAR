@@ -44,7 +44,7 @@ testY = labels[~trainSplit]
 
 def cnnModel():
     model = Sequential()
-    # adding the first convolutionial layer with 32 filters and 5 by 5 kernal size, using the rectifier as the activation function
+    # adding the first convolutional layer
     model.add(Conv2D(numFilters, (kernalSize1, kernalSize1), input_shape=(numOfRows, numOfColumns, 1), activation='relu'))
     # adding a maxpooling layer
     model.add(MaxPooling2D(pool_size=(poolingWindowSz,poolingWindowSz), padding='valid'))
