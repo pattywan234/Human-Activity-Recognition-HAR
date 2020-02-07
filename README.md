@@ -81,3 +81,4 @@ See also the list of [contributors](https://github.com/your/project/contributors
 ## Reference
 - LSTM model based on [TensorFlow on Android for Human Activity Recognition with LSTMs](https://github.com/curiousily/TensorFlow-on-Android-for-Human-Activity-Recognition-with-LSTMs)
 - CNN model based on [Human Activity Recognition using CNN in Keras](https://github.com/Shahnawax/HAR-CNN-Keras)
+- Github TOC [gh-md-toc](https://github.com/ekalinin/github-markdown-toc/blob/master/README.md)
