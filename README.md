@@ -4,6 +4,7 @@ One Paragraph of project description goes here
 
 ## Table of Contents
 <!--ts-->
+[Getting Started](##gettingstarted)
 <!--te-->
 ## Getting Started
 
