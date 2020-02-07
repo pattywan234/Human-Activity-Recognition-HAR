@@ -2,6 +2,9 @@
 
 One Paragraph of project description goes here
 
+## Table of Contents
+- [Getting Started](## Getting Started)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -15,6 +18,7 @@ These instructions will get you a copy of the project up and running on your loc
 - Keras
 - seaborn
 - sklearn
+- [virsual environment](https://docs.python.org/3/tutorial/venv.html)
 Before you run the code,
 1. make directory for data set named 'data' in the project directory. In 'data' directory must has 'CNN-data' and 'LSTM-data' directory.
 2. set Virtualenv that has all inpenndencies.
@@ -75,5 +79,5 @@ Add additional notes about how to deploy this on a live system
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## Reference
-- LSTM model based on .[TensorFlow on Android for Human Activity Recognition with LSTMs].(https://github.com/curiousily/TensorFlow-on-Android-for-Human-Activity-Recognition-with-LSTMs)
-- CNN model based on .[Human Activity Recognition using CNN in Keras].(https://github.com/Shahnawax/HAR-CNN-Keras)
+- LSTM model based on [TensorFlow on Android for Human Activity Recognition with LSTMs](https://github.com/curiousily/TensorFlow-on-Android-for-Human-Activity-Recognition-with-LSTMs)
+- CNN model based on [Human Activity Recognition using CNN in Keras](https://github.com/Shahnawax/HAR-CNN-Keras)
