@@ -3,9 +3,7 @@
 One Paragraph of project description goes here
 
 ## Table of Contents
-<! --ts-->
-- [Getting Started](## Getting Started)
-<! --te-->
+
 
 ## Getting Started
 
