@@ -1,6 +1,7 @@
 import pandas as pd
 from scipy import stats
 import numpy as np
+from sklearn.model_selection import train_test_split
 
 
 columns = ['user', 'activity', 'timestamp', 'x-axis', 'y-axis', 'z-axis']
