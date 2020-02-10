@@ -33,15 +33,6 @@ numClasses = labels.shape[1]
 # dropout ratio for dropout layer
 dropOutRatio = 0.2
 
-# splitting in training and testing data
-trainSplit = np.random.rand(len(reshapedSegments)) < trainSplitRatio
-trainX = reshapedSegments[trainSplit]
-testX = reshapedSegments[~trainSplit]
-trainX = np.nan_to_num(trainX)
-testX = np.nan_to_num(testX)
-trainY = labels[trainSplit]
-testY = labels[~trainSplit]
-
 def cnnModel():
     model = Sequential()
     # adding the first convolutional layer
@@ -68,5 +59,4 @@ for layer in model.layers:
 model.fit(trainX, trainY, validation_split=1-trainSplitRatio, epochs=Epochs, batch_size=batchSize, verbose=2)
 predictions = model.predict(testX, verbose=2)
 score = model.evaluate(testX, testY, verbose=2)
-print('Baseline Error: %.2f%%' % (100-score[1]*100))
-
+print('test loss, test accuracy', score)
