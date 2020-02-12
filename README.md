@@ -1,10 +1,24 @@
 # Human Activity Recognition (HAR)
 
-One Paragraph of project description goes here
+This repository is about human activity recognition project.
+
+Data explanation
+
+Data set name: WISDM version 1.1
+Website:  http://www.cis.fordham.edu/wisdm/dataset.php
+Format: 6 columns per row
+
+user, activity, timestamp, x-acceleration, y-acceleration, z-acceleration
+
+Activity: Walking, Jogging, Sitting, Standing, Upstairs, Downstairs 
 
 ## Table of Contents
 <!--ts-->
 [Getting Started](##gettingstarted)
+[Running the tests](##runningthetests)
+[Authors](##author)
+[Reference](##reference)
+
 <!--te-->
 ## Getting Started
 
@@ -45,18 +59,7 @@ Explain what these tests test and why
 Explain what these tests test and why
 
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-
-## Authors
+## Author
 
 * **Phataratah Sa-nguannarm** - *Graduate student at Sun Moon University*
 
