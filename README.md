@@ -16,7 +16,7 @@ Activity: Walking, Jogging, Sitting, Standing, Upstairs, Downstairs
 <!--ts-->
 [Getting Started](##gettingstarted)
 [Running the tests](##runningthetests)
-[Authors](##author)
+[Author](##author)
 [Reference](##reference)
 
 <!--te-->
@@ -62,8 +62,6 @@ Explain what these tests test and why
 ## Author
 
 * **Phataratah Sa-nguannarm** - *Graduate student at Sun Moon University*
-
-See also the list of [contributors]() who participated in this project.
 
 ## Reference
 - LSTM model based on [TensorFlow on Android for Human Activity Recognition with LSTMs](https://github.com/curiousily/TensorFlow-on-Android-for-Human-Activity-Recognition-with-LSTMs)
