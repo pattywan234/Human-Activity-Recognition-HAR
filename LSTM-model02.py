@@ -1,6 +1,10 @@
 import numpy as np
 from sklearn.model_selection import KFold
 import tensorflow.compat.v1 as tf
+from sklearn import metrics
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.metrics import f1_score
 
 tf.disable_v2_behavior()
 
@@ -81,9 +85,11 @@ BATCH_SIZE = 1024
 saver = tf.train.Saver()
 
 history = dict(train_loss=[],
-               train_acc=[],)
-               #test_loss=[],
-               #test_acc=[])
+               train_acc=[],
+               val_loss=[],
+               val_acc=[],
+               test_loss=[],
+               test_acc=[])
 
 train_x, train_y, val_x, val_y = cross_val(SPLIT_SIZE)
 
@@ -100,19 +106,57 @@ for i in range(1, N_EPOCHS + 1):
 
     _, acc_train, loss_train = sess.run([pred_softmax, accuracy, loss], feed_dict={X: train_x, Y: train_y})
     _, acc_val, loss_val = sess.run([pred_softmax, accuracy, loss], feed_dict={X: val_x, Y: val_y})
-    #_, acc_test, loss_test = sess.run([pred_softmax, accuracy, loss], feed_dict={X: X_test, Y: y_test})
+    _, acc_test, loss_test = sess.run([pred_softmax, accuracy, loss], feed_dict={X: X_test, Y: y_test})
 
     history['train_loss'].append(loss_train)
     history['train_acc'].append(acc_train)
-    #history['test_loss'].append(loss_test)
-    #history['test_acc'].append(acc_test)
-
-    if i != 1 and i % 10 != 0:
-        continue
+    history['val_loss'].append(loss_val)
+    history['val_acc'].append(acc_val)
+    history['test_loss'].append(loss_test)
+    history['test_acc'].append(acc_test)
+    
+    #if i != 1 and i % 10 != 0:
+        #continue
     print(f'epoch: {i} train accuracy: {acc_train} loss: {loss_train} validate accuracy: {acc_val} loss: {loss_val}')
     #print(f'epoch: {i} test accuracy: {acc_test} loss: {loss_test}')
 
 
 predictions, acc_final, loss_final = sess.run([pred_softmax, accuracy, loss], feed_dict={X: X_test, Y: y_test})
 print(f'test accuracy: {acc_final} loss: {loss_final}')
+max_test = np.argmax(y_test, axis=1)
+max_predict = np.argmax(predictions, axis=1)
+#f1 = f1_score(max_test, max_predict)
+print(f'test accuracy: {acc_final} loss: {loss_final}')
+#print('F1 score', f1)
 
+plt.figure(figsize=(12, 8))
+
+plt.plot(np.array(history['train_loss']), "r--", label="Train loss")
+plt.plot(np.array(history['train_acc']), "g--", label="Train accuracy")
+
+plt.plot(np.array(history['val_loss']), "bo-", label="Val loss", markersize=8)
+plt.plot(np.array(history['val_acc']), "b>-", label="Val accuracy", markersize=8)
+
+plt.plot(np.array(history['test_loss']), "r-", label="Test loss")
+plt.plot(np.array(history['test_acc']), "g-", label="Test accuracy")
+
+plt.title("Training session's progress over iterations")
+plt.legend(loc='upper right', shadow=True)
+plt.ylabel('Training Progress (Loss or Accuracy values)')
+plt.xlabel('Training Epoch')
+plt.ylim(0)
+
+plt.show()
+
+
+"""
+#Confusion matrix
+labels = ['Downstairs', 'Jogging', 'Sitting', 'Standing', 'Upstairs', 'Walking']
+conf_matrix = metrics.confusion_matrix(max_test, max_predict)
+plt.figure(figsize=(16, 14))
+sns.heatmap(conf_matrix, xticklabels=labels, yticklabels=labels, annot=True, fmt='d')
+plt.title("Confusion matrix")
+plt.ylabel('True label')
+plt.xlabel('Predicted label')
+plt.show()
+"""
