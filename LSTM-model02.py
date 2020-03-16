@@ -112,12 +112,12 @@ for i in range(1, N_EPOCHS + 1):
 
     #if i != 1 and i % 10 != 0:
         #continue
-    print(f'epoch: {i} train accuracy: {acc_train} loss: {loss_train} validate accuracy: {acc_val} loss: {loss_val}')
-    #print(f'epoch: {i} test accuracy: {acc_test} loss: {loss_test}')
+    print(f'epoch: {i} train accuracy: {train_acc} loss: {train_loss} validate accuracy: {val_acc} loss: {val_loss}')
+    #print(f'epoch: {i} test accuracy: {test_acc} loss: {test_loss}')
 
 
-predictions, acc_final, loss_final = sess.run([pred_softmax, accuracy, loss], feed_dict={X: X_test, Y: y_test})
-print(f'test accuracy: {acc_final} loss: {loss_final}')
+predictions, final_acc, final_loss = sess.run([pred_softmax, accuracy, loss], feed_dict={X: X_test, Y: y_test})
+print(f'test accuracy: {final_acc} loss: {final_loss}')
 
 pickle.dump(history, open('data/LSTM-data/evaluate/histpry20.p', 'wb'))
 np.save('data/LSTM-data/evaluate/predictions20.npy', predictions)
