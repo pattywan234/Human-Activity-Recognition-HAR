@@ -1,0 +1,11 @@
+import numpy as np
+
+data = np.load("wesad/S2/c_acc.npy")
+label = []
+sample = len(data)
+
+for i in range(1, sample+1):
+    label.append([0, 0, 1, 0, 0, 0])
+
+np.save("wesad/S2/label_acc.npy", label)
+print('finish')
