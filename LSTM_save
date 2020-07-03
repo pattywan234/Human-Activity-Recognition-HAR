@@ -1,0 +1,112 @@
+import numpy as np
+from sklearn.model_selection import KFold
+import tensorflow.compat.v1 as tf
+
+tf.disable_v2_behavior()
+
+X_train = np.load("data/LSTM-data/wisdm/X_train07.npy")
+X_test = np.load("data/LSTM-data/wisdm/X_test03.npy")
+y_train = np.load("data/LSTM-data/wisdm/y_train07.npy")
+y_test = np.load("data/LSTM-data/wisdm/y_test03.npy")
+
+N_CLASSES = 6
+N_HIDDEN_UNITS = 128
+N_TIME_STEPS = 200
+N_FEATURES = 3
+
+
+def create_LSTM_model(inputs):
+    w_hidden = tf.Variable(tf.random_normal([N_FEATURES, N_HIDDEN_UNITS]), name="w_hidden")
+    w_output = tf.Variable(tf.random_normal([N_HIDDEN_UNITS, N_CLASSES]), name="w_output")
+    biases_hidden = tf.Variable(tf.random_normal([N_HIDDEN_UNITS], mean=1.0), name="b_hidden")
+    biases_output = tf.Variable(tf.random_normal([N_CLASSES]), name="b_output")
+    X = tf.transpose(inputs, [1, 0, 2])
+    X = tf.reshape(X, [-1, N_FEATURES])
+    hidden = tf.nn.relu(tf.matmul(X, w_hidden) + biases_hidden)
+    hidden = tf.split(hidden, N_TIME_STEPS, 0)
+
+    # LSTM layers
+    lstm_layers = [tf.nn.rnn_cell.BasicLSTMCell(N_HIDDEN_UNITS, forget_bias=1.0) for _ in range(2)]
+    lstm_layers = tf.nn.rnn_cell.MultiRNNCell(lstm_layers)
+
+    outputs, _ = tf.nn.static_rnn(lstm_layers, hidden, dtype=tf.float32)
+
+    # Get output for the last time step
+    lstm_last_output = outputs[-1]
+
+    return tf.matmul(lstm_last_output, w_output) + biases_output
+
+def cross_val(split_size):
+    kfold = KFold(n_splits=split_size, random_state=2, shuffle=True)
+    for train_idx, val_idx in kfold.split(X_train, y_train):
+        trainx = X_train[train_idx]
+        trainy = y_train[train_idx]
+        valx = X_train[val_idx]
+        valy = y_train[val_idx]
+    return trainx, trainy, valx, valy
+
+
+tf.reset_default_graph()
+
+
+X = tf.placeholder(tf.float32, [None, N_TIME_STEPS, N_FEATURES], name="input")
+Y = tf.placeholder(tf.float32, [None, N_CLASSES], name="label")
+
+pred_Y = create_LSTM_model(X)
+pred_softmax = tf.nn.softmax(pred_Y, name="y_")
+
+L2_LOSS = 0.002
+
+l2 = L2_LOSS * sum(tf.nn.l2_loss(tf_var) for tf_var in tf.trainable_variables())
+
+loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred_Y, labels=Y)) + l2
+
+LEARNING_RATE = 0.0015
+
+optimizer = tf.train.AdamOptimizer(learning_rate=LEARNING_RATE).minimize(loss)
+
+correct_pred = tf.equal(tf.argmax(pred_softmax, 1), tf.argmax(Y, 1))
+accuracy = tf.reduce_mean(tf.cast(correct_pred, dtype=tf.float32))
+
+N_EPOCHS = 3
+BATCH_SIZE = 1024
+
+
+history = dict(train_loss=[], train_acc=[], val_loss=[], val_acc=[], test_loss=[], test_acc=[])
+
+SPLIT_SIZE = 5
+
+train_x, train_y, val_x, val_y = cross_val(SPLIT_SIZE)
+
+saver = tf.train.Saver()
+
+train_count = len(train_x)
+
+with tf.Session() as sess:
+
+    sess.run(tf.global_variables_initializer())
+
+    for i in range(1, N_EPOCHS + 1):
+        
+        for start, end in zip(range(0, train_count, BATCH_SIZE), range(BATCH_SIZE, train_count + 1, BATCH_SIZE)):
+            sess.run(optimizer, feed_dict={X: train_x[start:end], Y: train_y[start:end]})
+
+        
+        _, train_acc, train_loss = sess.run([pred_softmax, accuracy, loss], feed_dict={X: train_x, Y: train_y})
+        _, val_acc, val_loss = sess.run([pred_softmax, accuracy, loss], feed_dict={X: val_x, Y: val_y})
+        #_, test_acc, test_loss = sess.run([pred_softmax, accuracy, loss], feed_dict={X: X_test, Y: y_test})
+        saver.save(sess, save_path='data/LSTM-data/wisdm/test/test_callback3', global_step=N_EPOCHS)
+        history['train_loss'].append(train_loss)
+        history['train_acc'].append(train_acc)
+        history['val_loss'].append(val_loss)
+        history['val_acc'].append(val_acc)
+        #history['test_loss'].append(test_loss)
+        #history['test_acc'].append(test_acc)
+
+        if i != 1 and i % 1 != 0:
+            continue
+        print(f'epoch: {i} train accuracy: {train_acc} loss: {train_loss} validate accuracy: {val_acc} loss: {val_loss}')
+        #print(f'epoch: {i} test accuracy: {test_acc} loss: {test_loss}')
+    sess.close()
+    #predictions, final_acc, final_loss = sess.run([pred_softmax, accuracy, loss], feed_dict={X: X_test, Y: y_test})
+    #print(f'test accuracy: {final_acc} loss: {final_loss}')
