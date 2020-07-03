@@ -67,3 +67,4 @@ Explain what these tests test and why
 - LSTM model based on [TensorFlow on Android for Human Activity Recognition with LSTMs](https://github.com/curiousily/TensorFlow-on-Android-for-Human-Activity-Recognition-with-LSTMs)
 - CNN model based on [Human Activity Recognition using CNN in Keras](https://github.com/Shahnawax/HAR-CNN-Keras)
 - Github TOC [gh-md-toc](https://github.com/ekalinin/github-markdown-toc/blob/master/README.md)
+- Save and restore the model [here](https://github.com/AISangam/Save-and-Restore-Model-Tensorflow)
