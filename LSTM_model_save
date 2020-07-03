@@ -108,7 +108,7 @@ with tf.Session() as sess:
         print(f'epoch: {i} train accuracy: {train_acc} loss: {train_loss} validate accuracy: {val_acc} loss: {val_loss}')
         #print(f'epoch: {i} test accuracy: {test_acc} loss: {test_loss}')
     
-    predictions, final_acc, final_loss = sess.run([pred_softmax, accuracy, loss], feed_dict={X: X_test, Y: y_test})
-    print(f'test accuracy: {final_acc} loss: {final_loss}')
-    np.save('data/LSTM-data/PAMAP2/predictions1-50.npy', predictions)
+    #predictions, final_acc, final_loss = sess.run([pred_softmax, accuracy, loss], feed_dict={X: X_test, Y: y_test})
+    #print(f'test accuracy: {final_acc} loss: {final_loss}')
+    #np.save('data/LSTM-data/PAMAP2/predictions1-50.npy', predictions)
     sess.close()
