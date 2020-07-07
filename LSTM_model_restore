@@ -4,13 +4,13 @@ import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
 
 
-X_test = np.load("data/LSTM-data/wisdm/X_test03.npy")
-y_test = np.load("data/LSTM-data/wisdm/y_test03.npy")
+X_test = np.load("data/LSTM-data/wisdm/X_test03.npy") #
+y_test = np.load("data/LSTM-data/wisdm/y_test03.npy") #
 
 
 sess = tf.Session()
-loader = tf.train.import_meta_graph('data/LSTM-data/wisdm/test/test_callback3-3.meta')
-loader.restore(sess, tf.train.latest_checkpoint('data/LSTM-data/wisdm/test'))
+loader = tf.train.import_meta_graph('data/LSTM-data/wisdm/test/test_callback3-3.meta') #
+loader.restore(sess, tf.train.latest_checkpoint('data/LSTM-data/wisdm/test')) #
 graph = tf.get_default_graph()
 
 w_hidden = graph.get_tensor_by_name("w_hidden:0")
@@ -21,5 +21,5 @@ X = graph.get_tensor_by_name("input:0")
 Y = graph.get_tensor_by_name("label:0")
 op_restore = graph.get_tensor_by_name("y_:0")
 
-print(sess.run(op_restore, feed_dict={X: X_test, Y: y_test}))
-
+predicted = sess.run(op_restore, feed_dict={X: X_test, Y: y_test})
+np.save("data/LSTM-data/wisdm/test/predicted.npy", predicted)
