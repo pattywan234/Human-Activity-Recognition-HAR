@@ -21,7 +21,6 @@ X = graph.get_tensor_by_name("input:0")
 Y = graph.get_tensor_by_name("label:0")
 op_restore = graph.get_tensor_by_name("y_:0")
 
-predicted, test_accu, test_loss = sess.run(op_restore, feed_dict={X: X_test, Y: y_test})
+predicted = sess.run(op_restore, feed_dict={X: X_test, Y: y_test})
 np.save("data/LSTM-data/wisdm/test/predicted.npy", predicted)
 
-print(f'test accuracy: {test_accu} loss: {test_loss}')
