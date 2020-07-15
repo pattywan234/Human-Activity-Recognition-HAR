@@ -71,3 +71,16 @@ np.save("PAMAP2/y_test03.npy", y_test)
 """
 print("finished")
 
+"""
+# protocol (main data) + optional (missing activities data)
+import numpy as np
+import pandas as pd
+
+df_pro = pd.read_csv('PAMAP2/protocol/raw_data/subject109.csv', header=None).to_numpy()
+df_op = pd.read_csv('PAMAP2/optional/raw_data/subject109.csv', header=None).to_numpy()
+
+df_final = np.append(df_pro, df_op, axis=0)
+
+np.save('PAMAP2/protocol/S9/subject109.npy', df_final)
+print('finish')
+"""
