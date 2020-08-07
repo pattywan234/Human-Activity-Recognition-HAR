@@ -1,6 +1,6 @@
 import tensorflow.compat.v1 as tf
 
-def var_create(N_FEATURES, N_HIDDEN_UNITS, N_CLASSES):
+def var_create_LSTM(N_FEATURES, N_HIDDEN_UNITS, N_CLASSES):
     W = {
         'hidden': tf.Variable(tf.random_normal([N_FEATURES, N_HIDDEN_UNITS])),
         'output': tf.Variable(tf.random_normal([N_HIDDEN_UNITS, N_CLASSES]))
@@ -11,6 +11,16 @@ def var_create(N_FEATURES, N_HIDDEN_UNITS, N_CLASSES):
     }
     return W, biases
 
+def var_create(N_HIDDEN_UNITS, N_CLASSES):
+    W = {
+        'hidden': tf.Variable(tf.random_normal([N_CLASSES, N_HIDDEN_UNITS])),
+        'output': tf.Variable(tf.random_normal([N_HIDDEN_UNITS, N_CLASSES]))
+    }
+    biases = {
+        'hidden': tf.Variable(tf.random_normal([N_HIDDEN_UNITS], mean=1.0)),
+        'output': tf.Variable(tf.random_normal([N_CLASSES]))
+    }
+    return W, biases
 
 def create_LSTM_model(inputs, N_FEATURES, N_HIDDEN_UNITS, N_TIME_STEPS, W, biases):
     X = tf.transpose(inputs, [1, 0, 2])
@@ -30,9 +40,9 @@ def create_LSTM_model(inputs, N_FEATURES, N_HIDDEN_UNITS, N_TIME_STEPS, W, biase
     return tf.matmul(lstm_last_output, W['output']) + biases['output']
 
 def create_neural_net(inputs, N_FEATURES, W, biases):
-    X = tf.transpose(inputs, [1, 0, 2])
-    X = tf.reshape(X, [-1, N_FEATURES])
-    hidden = tf.matmul(X, W['hidden']) + biases['hidden']
+    #X = tf.transpose(inputs, [1, 0, 2])
+    #X = tf.reshape(X, [-1, N_FEATURES])
+    hidden = tf.matmul(inputs, W['hidden']) + biases['hidden']
     output = tf.matmul(hidden, W['output']) + biases['output']
     return output
 
