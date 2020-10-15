@@ -12,7 +12,7 @@ emg = np.load('wesad/S2/Normalize/emg_norm.npy')
 resp = np.load('wesad/S2/Normalize/resp_norm.npy')
 temp = np.load('wesad/S2/Normalize/temp_norm.npy')
 label = np.load('wesad/S2/label_paper.npy')
-
+#label is a number (0,1,2,3,4,6,7).
 N_TIME_STEPS = 200
 N_FEATURES = 8
 step = 20
