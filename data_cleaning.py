@@ -1,5 +1,5 @@
 import numpy as np
-
+from matplotlib import pyplot as plt
 #Raw data
 acc = np.load('wesad/S2/raw/c_acc.npy')
 ecg = np.load('wesad/S2/raw/c_ecg.npy')
@@ -102,9 +102,16 @@ for k in range(0, len(label_1)):
     temp_1.append(r_temp[indexk])
     l_1.append(label[indexk])
 
-all_label_1 = x_1 + y_1 + z_1 + ecg_1 + eda_1 + emg_1 + resp_1 + temp_1
-r_all_label_1 = np.asarray(all_label_1).reshape(len(label_1), 8)
-r_l_1 = np.asarray(l_1).reshape(len(label_1))
+rx_1 = np.asarray(x_1).reshape(len(label_1))
+ry_1 = np.asarray(y_1).reshape(len(label_1))
+rz_1 = np.asarray(z_1).reshape(len(label_1))
+recg_1 = np.asarray(ecg_1).reshape(len(label_1))
+reda_1 = np.asarray(eda_1).reshape(len(label_1))
+remg_1 = np.asarray(emg_1).reshape(len(label_1))
+rresp_1 = np.asarray(resp_1).reshape(len(label_1))
+rtemp_1 = np.asarray(temp_1).reshape(len(label_1))
+rl_1 = np.asarray(l_1).reshape(len(label_1))
+all_label_1 = np.stack((rx_1, ry_1, rz_1, recg_1, eda_1, remg_1, rresp_1, rtemp_1), axis=-1)
 
 for j in range(0, len(label_2)):
     indexj = label_2[j]
@@ -118,9 +125,16 @@ for j in range(0, len(label_2)):
     temp_2.append(r_temp[indexj])
     l_2.append(label[indexj])
 
-all_label_2 = x_2 + y_2 + z_2 + ecg_2 + eda_2 + emg_2 + resp_2 + temp_2
-r_all_label_2 = np.asarray(all_label_2).reshape(len(label_2), 8)
-r_l_2 = np.asarray(l_2).reshape(len(label_2))
+rx_2 = np.asarray(x_2).reshape(len(label_2), 1)
+ry_2 = np.asarray(y_2).reshape(len(label_2), 1)
+rz_2 = np.asarray(z_2).reshape(len(label_2), 1)
+recg_2 = np.asarray(ecg_2).reshape(len(label_2), 1)
+reda_2 = np.asarray(eda_2).reshape(len(label_2), 1)
+remg_2 = np.asarray(emg_2).reshape(len(label_2), 1)
+rresp_2 = np.asarray(resp_2).reshape(len(label_2), 1)
+rtemp_2 = np.asarray(temp_2).reshape(len(label_2), 1)
+rl_2 = np.asarray(l_2).reshape(len(label_2))
+all_label_2 = np.stack((rx_2, ry_2, rz_2, recg_2, eda_2, remg_2, rresp_2, rtemp_2), axis=-1)
 
 for l in range(0, len(label_3)):
     indexl = label_3[l]
@@ -134,9 +148,16 @@ for l in range(0, len(label_3)):
     temp_3.append(r_temp[indexl])
     l_3.append(label[indexl])
 
-all_label_3 = x_3 + y_3 + z_3 + ecg_3 + eda_3 + emg_3 + resp_3 + temp_3
-r_all_label_3 = np.asarray(all_label_3).reshape(len(label_3), 8)
-r_l_3 = np.asarray(l_3).reshape(len(label_3))
+rx_3 = np.asarray(x_3).reshape(len(label_3))
+ry_3 = np.asarray(y_3).reshape(len(label_3))
+rz_3 = np.asarray(z_3).reshape(len(label_3))
+recg_3 = np.asarray(ecg_3).reshape(len(label_3))
+reda_3 = np.asarray(eda_3).reshape(len(label_3))
+remg_3 = np.asarray(emg_3).reshape(len(label_3))
+rresp_3 = np.asarray(resp_3).reshape(len(label_3))
+rtemp_3 = np.asarray(temp_3).reshape(len(label_3))
+rl_3 = np.asarray(l_3).reshape(len(label_3))
+all_label_3 = np.stack((rx_3, ry_3, rz_3, recg_3, eda_3, remg_3, rresp_3, rtemp_3), axis=-1)
 
 for m in range(0, len(label_4)):
     indexm = label_4[m]
@@ -150,17 +171,24 @@ for m in range(0, len(label_4)):
     temp_4.append(r_temp[indexm])
     l_4.append(label[indexm])
 
-all_label_4 = x_4 + y_4 + z_4 + ecg_4 + eda_4 + emg_4 + resp_4 + temp_4
-r_all_label_4 = np.asarray(all_label_4).reshape(len(label_4), 8)
-r_l_4 = np.asarray(l_4).reshape(len(label_4))
+rx_4 = np.asarray(x_4).reshape(len(label_4), 1)
+ry_4 = np.asarray(y_4).reshape(len(label_4), 1)
+rz_4 = np.asarray(z_4).reshape(len(label_4), 1)
+recg_4 = np.asarray(ecg_4).reshape(len(label_4), 1)
+reda_4 = np.asarray(eda_4).reshape(len(label_4), 1)
+remg_4 = np.asarray(emg_4).reshape(len(label_4), 1)
+rresp_4 = np.asarray(resp_4).reshape(len(label_4), 1)
+rtemp_4 = np.asarray(temp_4).reshape(len(label_4), 1)
+rl_4 = np.asarray(l_4).reshape(len(label_4))
+all_label_4 = np.stack((rx_4, ry_4, rz_4, recg_4, eda_4, remg_4, rresp_4, rtemp_4), axis=-1)
 
-# np.save('wesad/S2/raw/all_label_1.npy', r_all_label_1)
-# np.save('wesad/S2/raw/all_label_2.npy', r_all_label_2)
-# np.save('wesad/S2/raw/all_label_3.npy', r_all_label_3)
-# np.save('wesad/S2/raw/all_label_4.npy', r_all_label_4)
-np.save('wesad/S2/raw/label_1.npy', r_l_1)
-np.save('wesad/S2/raw/label_2.npy', r_l_2)
-np.save('wesad/S2/raw/label_3.npy', r_l_3)
-np.save('wesad/S2/raw/label_4.npy', r_l_4)
+np.save('wesad/S2/raw/all_label_1.npy', all_label_1)
+np.save('wesad/S2/raw/all_label_2.npy', all_label_2)
+np.save('wesad/S2/raw/all_label_3.npy', all_label_3)
+np.save('wesad/S2/raw/all_label_4.npy', all_label_4)
+np.save('wesad/S2/raw/label_1.npy', rl_1)
+np.save('wesad/S2/raw/label_2.npy', rl_2)
+np.save('wesad/S2/raw/label_3.npy', rl_3)
+np.save('wesad/S2/raw/label_4.npy', rl_4)
 
 print('finished')
