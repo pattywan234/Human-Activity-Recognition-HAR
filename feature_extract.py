@@ -72,14 +72,65 @@ def discreteWT(data, wt):
     (cA, cD) = pywt.dwt(data, wt)
     return cA
 
-x_rms = rootMeanS(x, len(x))
-xy_corr = pearsCorr(x, y)
-x_fft = fastFT(x)
-x_dwt = discreteWT(x, 'db1')
+def average(data_1, data_2, data_3):
+    # determine mean of x-, y-, z-axis of accelerometer data
+    avg = []
+    for c_avg in range(0, len(data_1)):
+        ans = (data_1[c_avg] + data_2[c_avg] + data_3[c_avg])/3
+        avg.append(ans)
+    return avg
 
+x_rms = rootMeanS(x, len(x))
+y_rms = rootMeanS(y, len(y))
+z_rms = rootMeanS(z, len(z))
+# ecg_rms = rootMeanS(ecg, len(ecg))
+# eda_rms = rootMeanS(eda, len(eda))
+# emg_rms = rootMeanS(emg, len(emg))
+# resp_rms = rootMeanS(resp, len(resp))
+temp_rms = rootMeanS(temp, len(temp))
+
+xyz_avg = average(x, y, z)
+
+accecg_corr = pearsCorr(xyz_avg, ecg)
+acceda_corr = pearsCorr(xyz_avg, eda)
+accemg_corr = pearsCorr(xyz_avg, emg)
+accresp_corr = pearsCorr(xyz_avg, resp)
+acctemp_corr = pearsCorr(xyz_avg, temp)
+
+# ecgemg_corr = pearsCorr(ecg, emg)
+# ecgeda_corr = pearsCorr(ecg, eda)
+# ecgresp_corr = pearsCorr(ecg, resp)
+# emgeda_corr = pearsCorr(emg, eda)
+# emgtemp_corr = pearsCorr(emg, temp)
+# edatemp_corr = pearsCorr(eda, temp)
+# edaresp_corr = pearsCorr(eda, resp)
+# tempresp_corr = pearsCorr(temp, resp)
+
+# x_fft = fastFT(x)
+# y_fft = fastFT(y)
+# z_fft = fastFT(z)
+ecg_fft = fastFT(ecg)
+eda_fft = fastFT(eda)
+emg_fft = fastFT(emg)
+resp_fft = fastFT(resp)
+# temp_fft = fastFT(temp)
+
+
+# x_dwt = discreteWT(x, 'db1')
+# y_dwt = discreteWT(y, 'db1')
+# z_dwt = discreteWT(z, 'db1')
+ecg_dwt = discreteWT(ecg, 'db1')
+eda_dwt = discreteWT(eda, 'db1')
+emg_dwt = discreteWT(emg, 'db1')
+resp_dwt = discreteWT(resp, 'db1')
+# temp_dwt = discreteWT(temp, 'db1')
 # print('x_rms', x_rms)
 # print('xy_corr', xy_corr)
 # print('x_fft', x_fft)
 # print('x_dwt', x_dwt)
+
+final_data = np.stack((x_rms, y_rms, z_rms, temp_rms, accecg_corr, acceda_corr, accemg_corr, accresp_corr, acctemp_corr,
+                       ecg_dwt, eda_dwt, emg_dwt, resp_dwt), axis=-1)
+np.save('wesad/S2/Normalize/label_selected/label_4/all_extracted.npy', final_data)
 
 print('finished')
