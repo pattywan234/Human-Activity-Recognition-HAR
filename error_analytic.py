@@ -6,6 +6,12 @@ from sklearn.model_selection import KFold
 #tf.disable_v2_behavior()
 tf.disable_resource_variables()
 
+#import training and test data
+X_train = np.load('wesad/S2/Normalize/X_train.npy')
+X_test = np.load('wesad/S2/Normalize/X_test.npy')
+y_train = np.load('wesad/S2/Normalize/y_train.npy')
+y_test = np.load('wesad/S2/Normalize/y_test.npy')
+
 def cross_val(split_size):
     kfold = KFold(n_splits=split_size, random_state=2, shuffle=True)
     for train_idx, val_idx in kfold.split(X_train, y_train):
@@ -15,16 +21,11 @@ def cross_val(split_size):
         valy = y_train[val_idx]
     return trainx, trainy, valx, valy
 
-#import training and test data
-X_train = np.load('wesad/S2/Normalize/X_train.npy')
-X_test = np.load('wesad/S2/Normalize/X_test.npy')
-y_train = np.load('wesad/S2/Normalize/y_train.npy')
-y_test = np.load('wesad/S2/Normalize/y_test.npy')
 
-N_CLASSES = 7
+N_CLASSES = 7 #
 N_HIDDEN = 128
 N_TIME_STEPS = 200
-N_FEATURES = 8
+N_FEATURES = 8 #
 #lr= 0.0020,0.0025,  0.0030
 LEARNING_RATE = [0.002, 0.0025,  0.0030]
 L2_LOSS = 0.002
