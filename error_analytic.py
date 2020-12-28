@@ -25,7 +25,7 @@ def cross_val(split_size):
 N_CLASSES = 7 #
 N_HIDDEN = 128
 N_TIME_STEPS = 200
-N_FEATURES = 8 #
+N_FEATURES = 8 #len(X_train[2][1])
 #lr= 0.0020,0.0025,  0.0030
 LEARNING_RATE = [0.002, 0.0025,  0.0030]
 L2_LOSS = 0.002
