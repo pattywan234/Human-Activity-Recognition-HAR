@@ -61,3 +61,7 @@ blstm.fit(X_train, y_train, epochs=100, verbose=0)
 bhat = blstm.predict(X_test, verbose=0)
 print('predicted result of Bidireectional LSTM', bhat)
 
+
+np.save('wesad/wesad/S2/Normalize/label_selected/train_keras/v_result.npy', vhat)
+np.save('wesad/wesad/S2/Normalize/label_selected/train_keras/s_result.npy', shat)
+np.save('wesad/wesad/S2/Normalize/label_selected/train_keras/b_result.npy', bhat)
