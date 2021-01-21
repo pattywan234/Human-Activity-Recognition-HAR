@@ -1,3 +1,6 @@
+"""
+This file split training and test data.
+"""
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -15,14 +18,23 @@ from sklearn.model_selection import train_test_split
 # label = np.load('wesad/S2/label_paper.npy')
 
 # Normalized data + label selected data
-data_1 = np.load('wesad/S2/Normalize/label_selected/label_1/all_extracted.npy')
-data_2 = np.load('wesad/S2/Normalize/label_selected/label_2/all_extracted.npy')
-data_3 = np.load('wesad/S2/Normalize/label_selected/label_3/all_extracted.npy')
-data_4 = np.load('wesad/S2/Normalize/label_selected/label_4/all_extracted.npy')
-label_1 = np.load('wesad/S2/Normalize/label_selected/label_1.npy')[0:len(data_1)]
-label_2 = np.load('wesad/S2/Normalize/label_selected/label_2.npy')[0:len(data_2)]
-label_3 = np.load('wesad/S2/Normalize/label_selected/label_3.npy')[0:len(data_3)]
-label_4 = np.load('wesad/S2/Normalize/label_selected/label_4.npy')[0:len(data_4)]
+# data_1 = np.load('wesad/S2/Normalize/label_selected/label_1/all_extracted.npy')
+# data_2 = np.load('wesad/S2/Normalize/label_selected/label_2/all_extracted.npy')
+# data_3 = np.load('wesad/S2/Normalize/label_selected/label_3/all_extracted.npy')
+# data_4 = np.load('wesad/S2/Normalize/label_selected/label_4/all_extracted.npy')
+# label_1 = np.load('wesad/S2/Normalize/label_selected/label_1.npy')[0:len(data_1)]
+# label_2 = np.load('wesad/S2/Normalize/label_selected/label_2.npy')[0:len(data_2)]
+# label_3 = np.load('wesad/S2/Normalize/label_selected/label_3.npy')[0:len(data_3)]
+# label_4 = np.load('wesad/S2/Normalize/label_selected/label_4.npy')[0:len(data_4)]
+# Normalized data + label selected data + data augmentation
+data_1 = np.load('wesad/S2/Normalize/label_selected/train_keras/data_augment/f_extract_1.npy')
+data_2 = np.load('wesad/S2/Normalize/label_selected/train_keras/data_augment/f_extract_2.npy')
+data_3 = np.load('wesad/S2/Normalize/label_selected/train_keras/data_augment/f_extract_3.npy')
+data_4 = np.load('wesad/S2/Normalize/label_selected/train_keras/data_augment/f_extract_4.npy')
+label_1 = np.load('wesad/S2/Normalize/label_selected/train_keras/data_augment/label_1.npy')[0:len(data_1)]
+label_2 = np.load('wesad/S2/Normalize/label_selected/train_keras/data_augment/label_2.npy')[0:len(data_2)]
+label_3 = np.load('wesad/S2/Normalize/label_selected/train_keras/data_augment/label_3.npy')[0:len(data_3)]
+label_4 = np.load('wesad/S2/Normalize/label_selected/train_keras/data_augment/label_4.npy')[0:len(data_4)]
 
 all_data = np.concatenate((data_1, data_2, data_3, data_4))
 all_label = np.concatenate((label_1, label_2, label_3, label_4))
@@ -46,22 +58,31 @@ for i in range(0, len(all_data) - N_TIME_STEPS, step):
     # segments.append([xs, ys, zs, ecgs, edas, emgs, resps, temps])
     # labelss.append(labels)
     d = all_data[i: i + N_TIME_STEPS]
-    l = all_label[i: i + N_TIME_STEPS][0] # must have [0], not sure why but need in get_dummies
+    l = all_label[i: i + N_TIME_STEPS][0]
     segments.append(d)
     labelss.append(l)
 
 reshaped_segments = np.asarray(segments, dtype=np.float32).reshape(-1, N_TIME_STEPS, N_FEATURES)
-labeld = np.asarray(pd.get_dummies(labelss), dtype=np.float32)
+# labeld = np.asarray(pd.get_dummies(labelss), dtype=np.float32)
+labelss = np.asarray(labelss)
 
 RANDOM_SEED = 42
 # random_state is the seed used by the random number generator, if number is same random result will be same
-X_train, X_test, y_train, y_test = train_test_split(reshaped_segments, labeld, test_size=0.3, random_state=RANDOM_SEED)
+# X_train, X_test, y_train, y_test = train_test_split(reshaped_segments, labeld, test_size=0.3, random_state=RANDOM_SEED)
+X_train, X_test, y_train, y_test = train_test_split(reshaped_segments, labelss, test_size=0.3, random_state=RANDOM_SEED)
 
 # np.save('wesad/S2/Normalize/label_selected/X_train.npy', X_train)
 # np.save('wesad/S2/Normalize/label_selected/X_test.npy', X_test)
 # np.save('wesad/S2/Normalize/label_selected/y_train.npy', y_train)
 # np.save('wesad/S2/Normalize/label_selected/y_test.npy', y_test)
-
+# np.save('wesad/S2/Normalize/label_selected/train_keras/X_train.npy', X_train)
+# np.save('wesad/S2/Normalize/label_selected/train_keras/X_test.npy', X_test)
+# np.save('wesad/S2/Normalize/label_selected/train_keras/y_train.npy', y_train)
+# np.save('wesad/S2/Normalize/label_selected/train_keras/y_test.npy', y_test)
+np.save('wesad/S2/Normalize/label_selected/train_keras/data_augment/X_train.npy', X_train)
+np.save('wesad/S2/Normalize/label_selected/train_keras/data_augment/X_test.npy', X_test)
+np.save('wesad/S2/Normalize/label_selected/train_keras/data_augment/y_train.npy', y_train)
+np.save('wesad/S2/Normalize/label_selected/train_keras/data_augment/y_test.npy', y_test)
 
 # Raw data
 # acc = np.load('wesad/S2/raw/c_acc.npy')
@@ -122,5 +143,5 @@ X_train, X_test, y_train, y_test = train_test_split(reshaped_segments, labeld, t
 # np.save('wesad/S2/Normalize/y_train.npy', y_train)
 # np.save('wesad/S2/Normalize/y_test.npy', y_test)
 
-print("finished")
+print('DONE!!')
 
