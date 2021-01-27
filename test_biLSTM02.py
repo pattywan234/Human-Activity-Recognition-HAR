@@ -75,7 +75,7 @@ with tf.Session() as sess:
         for start, end in zip(range(0, train_count, BATCH_SIZE), range(BATCH_SIZE, train_count + 1, BATCH_SIZE)):
             sess.run(optimizer_acc, feed_dict={X_lstm: train_x[start:end], Y_lstm: train_y[start:end]})
             _lstm, train_acc_lstm, train_loss_lstm = sess.run([pred_Y_lstm, accuracy_lstm, loss_lstm],
-                                                            feed_dict={X_lstm: train_x, Y_lstm: train_y})
+                                                            feed_dict={X_lstm: train_x[start:end], Y_lstm: train_y[start:end]})
             print(f'lr: {LEARNING_RATE} epoch: {i} Train start: {start} end: {end}')
         train_acc.append(train_acc_lstm)
         train_loss.append(train_loss_lstm)
@@ -83,7 +83,7 @@ with tf.Session() as sess:
         for start, end in zip(range(0, train_count, BATCH_SIZE), range(BATCH_SIZE, val_count + 1, BATCH_SIZE)):
             sess.run(optimizer_acc, feed_dict={X_lstm: val_x[start:end], Y_lstm: val_y[start:end]})
             _val, val_acc_lstm, val_loss_lstm = sess.run([pred_Y_lstm, accuracy_lstm, loss_lstm],
-                                                              feed_dict={X_lstm: val_x, Y_lstm: val_y})
+                                                              feed_dict={X_lstm: val_x[start:end], Y_lstm: val_y[start:end]})
             print(f'lr: {LEARNING_RATE} epoch: {i} Validate start: {start} end: {end}')
         val_acc.append(val_acc_lstm)
         val_loss.append(val_loss_lstm)
