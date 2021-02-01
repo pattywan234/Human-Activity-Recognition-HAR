@@ -91,7 +91,7 @@ with tf.Session() as sess:
         val_acc.append(val_acc_lstm)
         val_loss.append(val_loss_lstm)
         print(f'lr: {lr} epoch: {i} validation accuracy: {val_acc_lstm} loss: {val_loss_lstm}')
-        print(f'DONE!! Training and validation epoch: {N_EPOCHS}')
+        print(f'DONE!! Training and validation epoch: {i}')
     print('START Testing')
     predictions_lstm, final_acc_lstm, final_loss_lstm = sess.run([pred_Y_lstm, accuracy_lstm, loss_lstm],
                                                                      feed_dict={X_lstm: X_test, Y_lstm: y_test})
